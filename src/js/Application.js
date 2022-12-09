@@ -36,4 +36,7 @@ export default class Application extends EventEmitter {
       });
     });
   }
+
+  _startLoading(){}
+  _stopLoading(){}
 }
