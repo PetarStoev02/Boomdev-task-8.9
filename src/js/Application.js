@@ -9,12 +9,31 @@ export default class Application extends EventEmitter {
 
   constructor() {
     super();
-
-    const button = document.querySelector(".button");
-    button.addEventListener("click", () => {
-      alert("💣");
-    });
-
+    this._loading = document.querySelector(".progress");
+    this._startLoading(true);
+    this._create();
     this.emit(Application.events.READY);
+  }
+
+  async _load() {
+    const res = await fetch("https://swapi.boom.dev/api/planets");
+    const planets = await res.json();
+    return planets.results;
+  }
+
+  _create() {
+    this._load().then((planets) => {
+      planets.forEach((element) => {
+        const box = document.createElement("div");
+        box.classList.add("box");
+        box.innerHTML = this._render({
+          name: element.name,
+          terrain: element.terrain,
+          population: element.population,
+        });
+        this._stopLoading(false);
+        document.body.querySelector(".main").appendChild(box);
+      });
+    });
   }
 }
