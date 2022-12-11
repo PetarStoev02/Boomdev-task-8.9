@@ -12,6 +12,9 @@ export default class Application extends EventEmitter {
     this._loading = document.querySelector(".progress");
     this._startLoading(true);
     this._create();
+    this._startLoading();
+    this._stopLoading();
+    this._render();
     this.emit(Application.events.READY);
   }
 
@@ -36,8 +39,4 @@ export default class Application extends EventEmitter {
       });
     });
   }
-
-  _startLoading() {}
-  _stopLoading() {}
-  _render() {}
 }
